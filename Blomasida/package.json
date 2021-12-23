@@ -1,0 +1,26 @@
+{
+  "type": "module",
+  "name": "vefsida",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run open",
+    "open": "concurrently \"http-server -a localhost -p 1234\" \"open http://localhost:1234/build\"",
+    "dev": "nodemon app.js"
+  },
+  "author": "Arnar",
+  "license": "ISC",
+  "dependencies": {
+    "browser-sync": "^2.26.14",
+    "browserify": "^17.0.0",
+    "concurrently": "^6.2.0",
+    "ejs": "^3.1.6",
+    "exif-js": "^2.3.0",
+    "express": "^4.17.1",
+    "lightbox": "^0.5.0",
+    "php": "^1.0.1"
+  },
+  "devDependencies": {},
+  "description": ""
+}
