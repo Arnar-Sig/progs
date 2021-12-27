@@ -29,7 +29,7 @@ getImgData();
 
 /* server gets */
 app.get('/', (req, res) =>{
-    //console.log(pictureData);
+    //console.log(pictureData[1]);
     res.render('index.ejs', {pictureData});
 
 });
@@ -51,52 +51,26 @@ app.post('/fileupload', upload.array('filetoupload', 12), function (req, res, ne
     for (let i = 0; i<arrayLength; i++){
         try{
             const stmt = db.prepare('INSERT INTO myndir (fileName, title, description) VALUES (?, ?, ?);');
-            stmt.run(`${req.files[i].originalname}`, `${req.body.title}`, `${req.body.description}`);
+            stmt.run(`${req.files[i].filename}`, `${req.body.title}`, `${req.body.description}`);
         }
         catch(e){
             console.log(e);
         }
         finally{
+            getImgData();
             res.redirect('/');
         }
     }
-    getImgData();
     //console.log(pictureInfo);
   })
 
 /* Functions */
 
 /* Update pictureInfo array */
-
-/*  ASYNC GET IMAGE DATA
-function getImgData(){
-    let arr = []
-    let sql = 'SELECT * FROM myndir;';
-    let p = new Promise((resolve, reject) => {
-        db.all(sql, arr, (err, rows) => {
-            if (err) {
-              throw err;
-            }
-            rows.forEach((row) => {
-                let theData = {
-                    "filename": row.fileName,
-                    "title": row.title,
-                    "description": row.description
-                   }
-                   arr.push(theData);
-            });
-            //console.log(arr);
-        });
-        resolve('Success');  
-    });
-    p.then((msg) => {
-        console.log("Successfully retrieved image-data");
-        return arr;
-    });
-};
- */
-
-
+/* Gets filename, title and description from the database and adds them to
+   the file pictureData in this order: [filename_1, title_1, description_1, 
+   filename_2, title_2, description_2,...,filename_n, title_n, description_n]
+   */
 async function getImgData(){
     let sql = 'SELECT * FROM myndir;';
     let pictureFileName =[];
@@ -111,7 +85,7 @@ async function getImgData(){
             pictureTitle.push(row.title);
             pictureDescription.push(row.description);
         });
-        let INDEXCORRECTOR = ["NOTUSED"];
+        let INDEXCORRECTOR = [pictureFileName.length];
         pictureData = INDEXCORRECTOR.concat(pictureFileName,pictureTitle, pictureDescription)
         return 1;
     });
@@ -119,25 +93,3 @@ async function getImgData(){
 
 
 }
-/* 
-async function getImgData(arr){
-    let sql = 'SELECT * FROM myndir;';
-    let temp = await db.all(sql, arr, (err, rows) => {
-        if (err) {
-          throw err;
-        }
-        rows.forEach((row) => {
-            let theData = {
-                "filename": row.fileName,
-                "title": row.title,
-                "description": row.description
-               }    
-               arr.push(theData);
-        });
-        
-        return arr;
-    });
-    return arr;
-
-}
- */
