@@ -29,19 +29,31 @@
     </header>
     <main>
         <div class="card-container">
-
-
-            <!--
+            <% for (let i = 1; i < pictureData[0] + 1; i++){ %>
             <div class="card">
                 <div class="card-img">
-                    <a href="/img/flower3.jpg" data-lightbox="flower3">
-                        <img src="/img/flower3.jpg" alt="picture of flower" />
+                    <a href="/img/<%= pictureData[i] %>" data-lightbox = "/img/<%= pictureData[i] %>" data-title="<%= pictureData[i+(pictureData[0])] %>">
+                        <img src="/img/<%= pictureData[i] %>" alt="test" />
+                    </a>
+                </div>
+                <div class=card-text>
+                    <h4><%= pictureData[i+(pictureData[0])] %></h4>
+                    <p><%= pictureData[i+(2*pictureData[0])] %></p>
+                </div>
+            </div>
+            <% }; %>
+<!--
+            <div class="card">
+                <div class="card-img">
+                    <a href="/img/flower3" data-lightbox="flower3">
+                        <img src="/img/flower3" alt="picture of flower" />
                     </a>
                 </div>
                 <div class="card-text">
                     <p>hallo eg er prufu texti</p>
                 </div>
             </div>
+
             <div class="card">
                 <div class="card-img">
                     <a href="/img/flower2.jpg" data-lightbox="flower2">
@@ -117,7 +129,7 @@
                     <p>hallo eg er prufu texti</p>
                 </div>
             </div>
-            -->
+-->
         </div>
     </main>
 </body>
