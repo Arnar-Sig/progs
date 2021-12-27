@@ -22,20 +22,20 @@ app.listen(5000);
   
 
 /* Data */
-let pictureInfo = getImgData([]);
-console.log(pictureInfo);
+pictureData = [];
+getImgData();
 
 
 
 /* server gets */
 app.get('/', (req, res) =>{
-    console.log(pictureInfo);
-    res.render('index.ejs');
+    //console.log(pictureData);
+    res.render('index.ejs', {pictureData});
 
 });
 
 app.get('/new', (req, res) =>{
-    console.log(pictureInfo)
+    //console.log(pictureData);
     res.render('new.ejs');
 });
 
@@ -51,7 +51,7 @@ app.post('/fileupload', upload.array('filetoupload', 12), function (req, res, ne
     for (let i = 0; i<arrayLength; i++){
         try{
             const stmt = db.prepare('INSERT INTO myndir (fileName, title, description) VALUES (?, ?, ?);');
-            stmt.run(`${req.files[i].filename}`, `${req.body.title}`, `${req.body.description}`);
+            stmt.run(`${req.files[i].originalname}`, `${req.body.title}`, `${req.body.description}`);
         }
         catch(e){
             console.log(e);
@@ -60,8 +60,8 @@ app.post('/fileupload', upload.array('filetoupload', 12), function (req, res, ne
             res.redirect('/');
         }
     }
-    pictureInfo = getImgData([]);
-    console.log(pictureInfo);
+    getImgData();
+    //console.log(pictureInfo);
   })
 
 /* Functions */
@@ -97,6 +97,29 @@ function getImgData(){
  */
 
 
+async function getImgData(){
+    let sql = 'SELECT * FROM myndir;';
+    let pictureFileName =[];
+    let pictureTitle = [];
+    let pictureDescription = [];
+    let temp = db.all(sql, [], (err, rows) => {
+        if (err) {
+          throw err;
+        }
+        rows.forEach((row) => {
+            pictureFileName.push(row.fileName);
+            pictureTitle.push(row.title);
+            pictureDescription.push(row.description);
+        });
+        let INDEXCORRECTOR = ["NOTUSED"];
+        pictureData = INDEXCORRECTOR.concat(pictureFileName,pictureTitle, pictureDescription)
+        return 1;
+    });
+    return 1;
+
+
+}
+/* 
 async function getImgData(arr){
     let sql = 'SELECT * FROM myndir;';
     let temp = await db.all(sql, arr, (err, rows) => {
@@ -115,7 +138,6 @@ async function getImgData(arr){
         return arr;
     });
     return arr;
-    console.log(temp);
+
 }
-
-
+ */
