@@ -9,6 +9,7 @@ const http = require('http');
 const multer  = require('multer')
 const upload = multer({ dest: 'public/img/' })
 
+
 /* Database */
 //const db = new Database('myndir.db', {verbose:console.log}); //better-sqlite3
 let db = new sqlite3.Database('myndir.db');
@@ -19,11 +20,10 @@ app.set('view engine', 'ejs');
 app.listen(5000);
 
 
-  
-
 /* Data */
 pictureData = [];
 getImgData();
+dataBeingAdded = [];
 
 
 /* Server gets */
@@ -35,15 +35,30 @@ app.get('/', (req, res) =>{
 
 app.get('/new', (req, res) =>{
     //console.log(pictureData);
-    res.render('new.ejs');
+    res.render('new.ejs', dataBeingAdded);
 });
+
+//TEST!!!
+app.post('/fileupload', upload.array('filetoupload', 30), function (req, res, next) {
+    // req.files is array of `photos` files
+    // req.body will contain the text fields, if there were any
+    //let arrayLength = req.files.length;
+    dataBeingAdded = req.files;
+    try{
+        res.render('new.ejs', {dataBeingAdded});
+    }
+    catch(e){
+        console.log(e);
+    }
+});
+
 
 
 /* Getting images from computer and, reading their filename, title and description 
    ATTENTION: MULTIPLE FILES AND MULTIPLE TITLE/DESCRIPTIONS NOT PROPERLY CONFIGURED
 */
-
-app.post('/fileupload', upload.array('filetoupload', 12), function (req, res, next) {
+/*
+app.post('/fileupload', upload.array('filetoupload', 30), function (req, res, next) {
     // req.files is array of `photos` files
     // req.body will contain the text fields, if there were any
     let arrayLength = req.files.length;
@@ -62,6 +77,7 @@ app.post('/fileupload', upload.array('filetoupload', 12), function (req, res, ne
     }
     //console.log(pictureInfo);
   })
+*/
 
 /* Functions */
 

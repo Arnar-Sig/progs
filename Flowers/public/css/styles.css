@@ -34,14 +34,10 @@ header nav {
     /* border: solid black 1px; */
 }
 
-header nav a{
-    
-}
 
 header nav button{
-    width:80px;
-    height:40px;
-    
+    height:30px;
+    border-radius: 5px;
 }
 
 main{
@@ -83,6 +79,7 @@ main{
     overflow: auto;
     /*overflow-y: scroll;*/
 }
+
 .card-text h4{
     margin-top: 1%;
     font-size: 2rem;
@@ -96,6 +93,30 @@ main{
 
 .form-container{
     margin-left:5%;
-    width:100px;
-    height:100px;
+    width:95%;
+    height:95%;
+    
+    
+}
+
+.form-container form{
+    /* border: solid 1px black; */
+    width:350px;
+    height:400px;
+    display:flex;
+    flex-direction:column;
+}
+
+.form-container form label{
+
+}
+
+form #title{
+    
+}
+
+form #description{
+    height:40%;
+    text-align:left;
+
 }

@@ -60,8 +60,6 @@ function addImgToJson(){
     }
   }
 
-
-
 app.use((req, res, next) =>{
   addImgToJson();
   next();

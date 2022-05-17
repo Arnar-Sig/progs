@@ -6,8 +6,6 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/lightbox.min.css">
     <script src="js/lightbox-plus-jquery.min.js"></script>
-    <script src="js/scripts.js"></script>
-
     <title>Blómasíða</title>
     </a>
 </head>
@@ -17,9 +15,9 @@
             <div class="header-title">Blómasíða</div>
         </a>
         <nav>
-            <a href="/new" class="btn ">
-                <button>New</button>
-            </a>
+            <form action="fileupload" id="uploadForm" method="post" enctype="multipart/form-data">
+                <input type="file" multiple onchange="javascript:submitForm()" id="filetoupload" name="filetoupload">
+            </form>
         </nav>
     </header>
     <main>
@@ -40,5 +38,5 @@
         </div>
     </main>
 </body>
-
+<script src="js/scripts.js"></script>
 </html>
