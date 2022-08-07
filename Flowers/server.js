@@ -2,7 +2,6 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-//const Database = require('better-sqlite3'); //better-sqlite3
 const sqlite3 = require('sqlite3').verbose();
 const http = require('http');
 //const formidable = require('formidable');
@@ -38,19 +37,19 @@ app.get('/new', (req, res) =>{
     res.render('new.ejs', dataBeingAdded);
 });
 
-//TEST!!!
-app.post('/fileupload', upload.array('filetoupload', 30), function (req, res, next) {
-    // req.files is array of `photos` files
-    // req.body will contain the text fields, if there were any
-    //let arrayLength = req.files.length;
-    dataBeingAdded = req.files;
-    try{
-        res.render('new.ejs', {dataBeingAdded});
-    }
-    catch(e){
-        console.log(e);
-    }
-});
+// //TEST!!!
+// app.post('/fileupload', upload.array('filetoupload', 30), function (req, res, next) {
+//     // req.files is array of `photos` files
+//     // req.body will contain the text fields, if there were any
+//     //let arrayLength = req.files.length;
+//     dataBeingAdded = req.files;
+//     try{
+//         res.render('new.ejs', {dataBeingAdded});
+//     }
+//     catch(e){
+//         console.log(e);
+//     }
+// });
 
 
 

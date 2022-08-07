@@ -8,7 +8,6 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 #from webdriver_manager.chrome import ChromeDriverManager
-
 import bs4
 import re
 import json, time
@@ -54,8 +53,7 @@ except:
 
 
 ### Scroll down at random intervals. ###
-
-numOfScrolls = 200
+numOfScrolls = 45
 for i in range(numOfScrolls):
     random = (randint(0, 2000))/2000
     ActionChains(driver).key_down(Keys.PAGE_DOWN).key_up(Keys.PAGE_UP).perform()
@@ -75,15 +73,26 @@ for entry in entries:
         entryTextLower = entryText.lower()
         if word in entryTextLower:
             linkTextFull = str(entry.find_all(href=True))
+            # type 1 link
             link = re.findall('https://www.facebook.com/groups/braskogbrall.is/posts[^\s]+', linkTextFull)
-            try:
-                link = link[0][:-1]
-            except:
-                link = 0
+            if len(link) > 0:
+                try:
+                    link = link[0][:-1]
+                except:
+                    link = 0
+            else:
+                # type 2 link
+                # example: /commerce/listing/453982849560883/?ref=share_attachment&__cft__[0]=AZVBAXohOo0SIG_rlKewOh1IswILZcuSFdlpMafXeSydGp_4IG0cDJoPxGrULRMgUZkKwmDLAOzj_dnjJo0JdSHFriG4gzQ6C_onJ4jkAUfsG5qG7QnSvOB4USr5qSJPKfGkiteoumV_5oWhmAfXkiGwyYwhfypc_6fiXsJZVaR2MWaxL7l_yqT5KYH5litK3sErkhc2GN4A2ZMmAetVb-_w&__tn__=EH-R
+                link = re.findall('/commerce/listing/.*-R\"', linkTextFull)
+                if len(link) > 0:
+                    try:
+                        link = 'https://www.facebook.com' + link[0][:-1]
+                    except:
+                        link = 0
+
             name = entry.find("h2", class_="gmql0nx0 l94mrbxd p1ri9a11 lzcic4wl aahdfvyu hzawbc8m").get_text()
             # title of image: "a8c37x1j ni8dbmo4 stjgntxs l9j0dhe7 ojkyduve"
             description = entry.find("span", class_="d2edcug0 hpfvmrgz qv66sw1b c1et5uql lr9zc1uh a8c37x1j fe6kdd0r mau55g9w c8b282yb keod5gw0 nxhoafnm aigsh9s9 d3f4x2em iv3no6db jq4qci2q a3bd9o3v b1v8xokw oo9gr5id hzawbc8m").get_text()
-            
             # TODO: ADD IMAGES?
             # <img alt class="i09qtzwb n7fi1qx3 datstx6m pmk7jnqg j9ispegn kr520xx4 k4urcfbm" src="link-to-pic">
             # extract src!
@@ -98,7 +107,7 @@ for x in results:
     try:
         print(x)
     except:
-        #print("Unable to print current result")
-        pass
+        print("Unable to print current result")
+        #pass
     
-driver.close()
+driver.quit()
