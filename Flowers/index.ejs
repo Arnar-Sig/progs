@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/lightbox.min.css">
+    <script src="js/lightbox-plus-jquery.min.js"></script>
+    <title>Blómasíða</title>
+    </a>
+</head>
+<body>
+    <header>
+        <a href="/">
+            <div class="header-title">Blómasíða</div>
+        </a>
+        <nav>
+            <!-- <form action="fileupload" id="uploadForm" method="post" enctype="multipart/form-data">
+                <input type="file" multiple onchange="javascript:submitForm()" id="filetoupload" name="filetoupload">
+            </form> -->
+        </nav>
+    </header>
+    <main>
+        <div class="card-container">
+            <% for (let i = 1; i < pictureData[0] + 1; i++){ %>
+            <div class="card">
+                <div class="card-img">
+                    <a href="/img/<%= pictureData[i] %>" data-lightbox = "/img/<%= pictureData[i] %>" data-title="<%= pictureData[i+(pictureData[0])] %>">
+                        <img src="/img/<%= pictureData[i] %>" alt="test" />
+                    </a>
+                </div>
+                <div class=card-text>
+                    <h4><%= pictureData[i+(pictureData[0])] %></h4>
+                    <p><%= pictureData[i+(2*pictureData[0])] %></p>
+                </div>
+            </div>
+            <% }; %>
+        </div>
+    </main>
+</body>
+<script src="js/scripts.js"></script>
+</html>
